@@ -1,0 +1,340 @@
+/* ======================================
+   GEOMETRY DASH CLONE — GLOBAL STYLES
+   Neon / Arcade aesthetic
+   ====================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Root Variables ── */
+:root {
+  --neon-cyan:   #00f5ff;
+  --neon-purple: #bf00ff;
+  --neon-pink:   #ff0090;
+  --neon-yellow: #ffe600;
+  --neon-green:  #39ff14;
+  --neon-orange: #ff6600;
+  --bg-deep:     #050510;
+  --bg-mid:      #0a0a20;
+  --panel-bg:    rgba(10, 10, 30, 0.92);
+  --text-main:   #e0e0ff;
+  --glow-blur:   20px;
+}
+
+/* ── Body ── */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  font-family: 'Orbitron', monospace;
+  color: var(--text-main);
+  user-select: none;
+}
+
+/* ── Canvas Wrapper ── */
+#game-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Canvas ── */
+#gameCanvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: transparent;
+  z-index: 1;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+/* ── Overlay Panels (common base) ── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: rgba(5, 5, 16, 0.85);
+  backdrop-filter: blur(6px);
+  transition: opacity 0.4s ease;
+  z-index: 10;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Title / Logo Text ── */
+.logo-title {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 18px rgba(0,245,255,0.7));
+  animation: pulse-logo 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-logo {
+  from { filter: drop-shadow(0 0 14px rgba(0,245,255,0.5)); }
+  to   { filter: drop-shadow(0 0 30px rgba(191,0,255,0.9)); }
+}
+
+.logo-sub {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  letter-spacing: 0.25em;
+  color: var(--neon-cyan);
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+/* ── Neon Buttons ── */
+.btn {
+  position: relative;
+  padding: 14px 48px;
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 2px solid var(--neon-cyan);
+  background: transparent;
+  color: var(--neon-cyan);
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: color 0.25s, box-shadow 0.25s, background 0.25s;
+  text-shadow: 0 0 8px var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(0,245,255,0.35), inset 0 0 12px rgba(0,245,255,0.08);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--neon-cyan);
+  opacity: 0;
+  transition: opacity 0.25s;
+  z-index: -1;
+}
+
+.btn:hover {
+  color: var(--bg-deep);
+  box-shadow: 0 0 28px rgba(0,245,255,0.8), inset 0 0 20px rgba(0,245,255,0.3);
+  text-shadow: none;
+}
+
+.btn:hover::before { opacity: 1; }
+
+.btn:active { transform: scale(0.97); }
+
+.btn.btn-purple {
+  border-color: var(--neon-purple);
+  color: var(--neon-purple);
+  text-shadow: 0 0 8px var(--neon-purple);
+  box-shadow: 0 0 12px rgba(191,0,255,0.35), inset 0 0 12px rgba(191,0,255,0.08);
+}
+.btn.btn-purple::before { background: var(--neon-purple); }
+.btn.btn-purple:hover {
+  color: #fff;
+  box-shadow: 0 0 28px rgba(191,0,255,0.8);
+}
+
+.btn.btn-pink {
+  border-color: var(--neon-pink);
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink);
+  box-shadow: 0 0 12px rgba(255,0,144,0.35), inset 0 0 12px rgba(255,0,144,0.08);
+}
+.btn.btn-pink::before { background: var(--neon-pink); }
+.btn.btn-pink:hover {
+  color: #fff;
+  box-shadow: 0 0 28px rgba(255,0,144,0.8);
+}
+
+/* ── Stat Cards ── */
+.stats-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0,245,255,0.06);
+  border: 1px solid rgba(0,245,255,0.2);
+  border-radius: 8px;
+  padding: 12px 28px;
+  min-width: 120px;
+}
+
+.stat-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: rgba(0,245,255,0.6);
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 12px var(--neon-cyan);
+}
+
+.stat-value.purple { color: var(--neon-purple); text-shadow: 0 0 12px var(--neon-purple); }
+.stat-value.pink   { color: var(--neon-pink);   text-shadow: 0 0 12px var(--neon-pink); }
+
+/* ── Controls hint ── */
+.controls-hint {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  line-height: 1.9;
+}
+
+.controls-hint span {
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 3px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin: 0 2px;
+}
+
+/* ── Level Selector ── */
+.level-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 480px;
+}
+
+.level-btn {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 2px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  font-family: 'Orbitron', monospace;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.level-btn:hover { transform: translateY(-4px); }
+
+.level-btn .lvl-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+.level-btn .lvl-name {
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* ── HUD (in-game, rendered on canvas — keep CSS minimal) ── */
+#hud-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  pointer-events: none;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 5;
+}
+
+.hud-item {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  color: rgba(0,245,255,0.75);
+  text-transform: uppercase;
+  text-shadow: 0 0 8px var(--neon-cyan);
+}
+
+/* ── Mute Button ── */
+#mute-btn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 20;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,245,255,0.3);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: var(--neon-cyan);
+  font-size: 1.2rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#mute-btn:hover {
+  box-shadow: 0 0 14px rgba(0,245,255,0.5);
+  border-color: var(--neon-cyan);
+}
+
+/* ── Progress Bar (bottom of screen) ── */
+#progress-bar-wrap {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  z-index: 5;
+  pointer-events: none;
+}
+
+#progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+  box-shadow: 0 0 10px var(--neon-cyan);
+  transition: width 0.1s linear;
+  width: 0%;
+}
+
+/* ── Particle Canvas (behind main canvas) ── */
+#bgCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Scrollbar hide ── */
+::-webkit-scrollbar { display: none; }
